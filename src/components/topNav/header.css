@@ -1,0 +1,43 @@
+.search-icon-one{
+    right: 6px;
+  top: 10px;
+  bottom: 10px;
+  font-size: 20px !important;
+}
+
+/* .div-navbar{
+  top:0px;
+  left:70px;
+  margin: auto;  
+   z-index: -1;
+  
+} */
+.dark-cont{
+  font-size: 12px;
+ 
+}
+.switch{
+  width: 5px;
+  height: 10px;
+}
+/* .search-text2{
+  border-radius: .7em;
+} */
+.img-div{
+  color: rgb(149, 151, 151);
+}
+
+
+
+/* .react-switch-handle{
+  width:14px;
+  height: 14px;
+} */
+
+.div-searchResult{
+  top:50px;
+  left:25px;
+}
+.checked{
+  color:#26ca28;
+}

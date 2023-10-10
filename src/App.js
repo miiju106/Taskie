@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-calendar/dist/Calendar.css";
+import "react-datepicker/dist/react-datepicker.css";
+
+import MainPage from './components/mainPage/mainPage';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SideNav from './components/sidebar/sideNav';
+import CreateTask from './components/createTask/createTask';
+import Completed from './components/completed/completed';
+import Pending from './components/completed/pending';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <main className='d-flex overflow-hidden'>
+        
+      <Router>
+      <SideNav/>
+      
+      <Routes>
+        <Route exact path="/" element={<MainPage/>} />
+        <Route path="/complete" element={<Completed/>} />
+        <Route path="/pending" element={<Pending/>} />
+        {/* <Route exact path="/homePage" element={<HomePage/>} /> */}
+       
+      </Routes>
+
+      </Router>
+        </main>      
+      
+     
     </div>
   );
 }

@@ -2,9 +2,10 @@
 
 /* light-mode */
 :root{
-  --background: #fffff;
-  --text-primary: #000;
-  --text-secondary: #8e05c2;
+  --background: #fff;
+  --bar-color:rgb(248, 249, 250);
+  --text-active: #000;
+  --text-inactive: #626365;
   --accent: #8e05c2;
   --border:#333;
   --form-bag: #fff;
@@ -13,9 +14,10 @@
 
 /* dark-mode */
 [data-theme = "dark"]{
-  --background: #000;
-  --text-primary:#fff;
-  --text-secondary: #8e05c2;
+  --background: #0000;
+  --bar-color:#26223E;
+  --text-active: #fff;
+  --text-inactive: #FAF9F6;
   --accent:#8e05c2;
   --border: #808080;
   --form-bg:#191919;
@@ -28,6 +30,7 @@ body {
   font-family: 'Outfit', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
 }
 
 code {

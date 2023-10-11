@@ -45,7 +45,7 @@ const SearchLists = ({searchValue, setSearchValue, filteredList, setFilteredList
         placeholder="Search..."
         aria-label="Username"
         aria-describedby="basic-addon1"
-        className="search-text2 rounded py-2 "
+        className="search-text2 rounded py-2"
         onChange={filterSearch}
       />
       <SearchIcon className="position-absolute text-dark search-icon-one" />

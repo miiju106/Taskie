@@ -4,30 +4,40 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import TaskOutlinedIcon from "@mui/icons-material/TaskOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 const SideNav = () => {
+
+  const location = useLocation()
+
+  
+
+  const whenActive = location.pathname
+  console.log(whenActive)
+
+  // const btnActive = whenActive ? "icon-div-active" : "icon-div"
   return (
-    <section className=" sticky-left side-div p-2">
-      <div className="d-flex flex-column gap-5">
-        <p className="fw-bold fs-5">Taskie</p>
-        <div className="">
+    <section className="side-div p-2">
+      <div className="d-md-grid gap-5">
+        <p className="fw-bold fs-5 d-none d-sm-block logo">Taskie</p>
+        <div className="nav d-md-block justify-content-around">
           <Link className="link-text" to="/">
-            <div className="icon-div mb-4">
+            <div className={whenActive == "/" ? "icon-div-active" : "icon-div"}>
               <HomeOutlinedIcon />
               <p>Home</p>
             </div>
           </Link>
 
           <Link className="link-text" to="/complete">
-            <div className="icon-div mb-4">
+            <div className={whenActive == "/complete" ? "icon-div-active" : "icon-div"}>
               <TaskOutlinedIcon />
               <p>Completed</p>
             </div>
           </Link>
 
           <Link className="link-text" to="/pending">
-            <div className="icon-div mb-4">
+            <div className={whenActive == "/pending" ? "icon-div-active" : "icon-div"}>
               <PendingActionsOutlinedIcon />
               <p>Pending</p>
             </div>

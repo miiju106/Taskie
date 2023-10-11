@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { complete, deleteTask } from "../store/taskSlice";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { useNavigate } from "react-router-dom";
 // import FilteredLists from "../topNav/filteredLists";
 
 const MainPage = () => {
@@ -26,7 +27,9 @@ const MainPage = () => {
   const pendingList = taskArray.filter((item) => item.completed == false);
 
   const dispatch = useDispatch();
-  console.log("reverse", reverseTaskArray);
+  const navigate = useNavigate()
+
+  
 
   useEffect(() => {
     const newArray = taskArray.slice(0);
@@ -34,28 +37,8 @@ const MainPage = () => {
     setReverseTaskArray(reverse);
   }, [taskArray]);
 
-  // taskArray?.sort((a, b) => {
-  //   let fa = a.dateCreated
-  //   let fb = b.dateCreated;
+  
 
-  //   if (fa < fb) {
-  //     return -1;
-  //   }
-  //   if (fa > fb) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
-
-  //   const sortByDate = (a, b) =>{
-  // if(a.dateCreated < b.dateCreated){
-  //   return 1;
-  // }
-  // if (a.dateCreated > b.dateCreated){
-  //   return -1;
-  // }
-  // return 0;
-  //   }
 
   // Attaching a moment ago to the recent tasks...
   const momentAgo = (dateInput) => {
@@ -66,10 +49,11 @@ const MainPage = () => {
     const convertToHr = Math.floor(momentTime / (60 * 60 * 1000));
     const convertToDay = Math.floor(momentTime / (60 * 60 * 1000 * 24));
     const convertToSec = Math.floor(momentTime / 1000);
+
     if (convertToMin <= 60) {
-      return `${convertToMin} mins ago`;
+      return `${convertToMin} min(s) ago`;
     } else {
-      return `${convertToHr} hrs ago`;
+      return `${convertToHr} hr(s) ago`;
     }
   };
 
@@ -81,7 +65,9 @@ const MainPage = () => {
     return `${year}, ${time}`;
   };
 
-  console.log();
+  const selectedTask = (idNumber, list) => {
+    navigate(`/view/${idNumber}`, { state: { id: idNumber} });
+  };
 
   return (
     <section className="main-div m-auto">
@@ -104,15 +90,16 @@ const MainPage = () => {
               ) : (
                 taskArray.map((list) => (
                   <Col className="">
-                    <Card className="border-0 bg-white card-task mb-2 p-3">
+                    <Card className="border-0 card-task mb-2 p-3">
                       <div className="d-flex justify-content-between">
                         <h5 className="fw-semibold  h5-text">{list.title}</h5>
                         <DeleteOutlineOutlinedIcon
+                        className="unchecked span-p"
                           onClick={() => dispatch(deleteTask(list))}
                         />
                       </div>
                       <div className="mt-2">
-                        <p className="body-p">{list.task.slice(0, 100)}...</p>
+                        <p className="body-p">{(list.task).slice(0, 100)}...</p>
                       </div>
                       <div>
                         <p className="date-p">
@@ -121,8 +108,8 @@ const MainPage = () => {
                       </div>
                       <div className="d-flex justify-content-between ">
                         <div>
-                          <span className="me-2">Edit</span>
-                          <span>View</span>
+                          <span className="me-2 span-p">Edit</span>
+                          <span className="view-span" onClick={()=> selectedTask(list.id)}>View</span>
                         </div>
                         <div>
                           <div>
@@ -133,10 +120,11 @@ const MainPage = () => {
                               />
                             ) : (
                               <CheckBoxOutlineBlankIcon
+                              className="unchecked"
                                 onClick={() => dispatch(complete(list))}
                               />
                             )}
-                            <span>
+                            <span className="span-p">
                               {list.completed ? "Completed" : "Pending"}
                             </span>
                           </div>
@@ -148,12 +136,12 @@ const MainPage = () => {
               )}
             </Row>
           </Col>
-          <Col>
-            <Card className="card-right border-0 p-3">
+          <Col lg={3} md={4}>
+            <Card className="d-md-block d-none card-right border-0 p-3">
               <div className="d-flex flex-wrap gap-3 mb-4">
                 <div>
                   <span className="project-num">Total Tasks</span>
-                  <h4>{taskArray.length}</h4>
+                  <h4 className="span-p">{taskArray.length}</h4>
                 </div>
                 <div>
                   <span className="project-num">Completed</span>
@@ -166,8 +154,8 @@ const MainPage = () => {
               </div>
               <div className="">
                 <p className="fw-semibold recent-p">Recent Tasks</p>
-                {reverseTaskArray.slice(0, 4).map((list) => (
-                  <Card className="border-0 bg-white card-task mb-2 p-3">
+                {reverseTaskArray && reverseTaskArray.slice(0, 4).map((list) => (
+                  <Card className="border-0 card-task mb-2 p-3">
                     <div className="d-flex justify-content-between">
                       <h5 className="fw-semibold  h5-text">{list.title}</h5>
                     </div>

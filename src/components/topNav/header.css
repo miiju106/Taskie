@@ -1,3 +1,10 @@
+@media screen and (max-width: 428px) {
+  .search-nav{
+     width:100% !important;
+  }
+ 
+}
+
 .search-icon-one{
     right: 6px;
   top: 10px;

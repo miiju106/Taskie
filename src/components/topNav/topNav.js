@@ -42,7 +42,30 @@ const TopNav = () => {
         {/* <Navbar.Brand href="#home" className="text-danger  fs-4 brand-name">
       Task-It
     </Navbar.Brand>  */}
-        <Nav>
+    <Nav className="flex-row d-md-none w-100 mb-3 justify-content-end  gap-4 align-item-center">
+          <label className="d-flex align-item-center gap-2">
+            <span className="span-p">dark mode</span>
+            <label>
+              <ReactSwitch
+                height={20}
+                width={48}
+                handleDiameter={24}
+                onHandleColor="#2693e6"
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                onColor="#86d3ff"
+              />
+              {/* <ToggleButton style={{ fontSize: "14px" }}/> */}
+            </label>
+          </label>
+
+          <div className="user-img d-flex align-item-center gap-1">
+            <div className="img-div">
+              <AccountCircleIcon />
+            </div>
+            <span className="span-p">John Doe</span>
+          </div>
+        </Nav>
+        <Nav className="search-nav">
           <InputGroup className=" search-cont position-relative m-auto rounded-pill w-100 d-lg-none d-flex">
             <SearchLists
               searchValue={searchValue}
@@ -57,7 +80,7 @@ const TopNav = () => {
           <Col lg={10} md={9} className="position-absolute div-searchResult">
             <Row lg={3} md={3} className="mb-4">
               {taskArray.length != 0 && (searchValue && filteredList.slice(0,5).map((list)=>(
-            <Card className="border-0 bg-white card-task mb-2 p-3 me-3">
+            <Card className="border-0 card-task mb-2 p-3 me-3">
             <div className="d-flex justify-content-between">
               <h5 className="fw-semibold  h5-text">{list.title}</h5>
               <DeleteOutlineOutlinedIcon  onClick={()=> dispatch(deleteTask(list))}/>
@@ -72,8 +95,8 @@ const TopNav = () => {
             </div>
             <div className="d-flex justify-content-between ">
               <div>
-                <span className="me-2">Edit</span>
-                <span>View</span>
+                <span className="me-2 span-p">Edit</span>
+                <span className="span-p">View</span>
               </div>
               <div>
                 <div>
@@ -108,6 +131,7 @@ const TopNav = () => {
           id="basic-navbar-nav"
           className="justify-content-between align-items-center text-warning"
         >
+          
           <Nav className="w-25">
             <InputGroup className=" search-cont position-relative m-auto overflow-hidden">
               <SearchLists
@@ -120,7 +144,7 @@ const TopNav = () => {
           </Nav>
         </Navbar.Collapse>
 
-        <Nav className="flex-row gap-4 align-item-center">
+        <Nav className="flex-row d-none d-md-flex gap-4 align-item-center">
           <label className="d-flex align-item-center gap-2">
             <span>dark mode</span>
             <label>

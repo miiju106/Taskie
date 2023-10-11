@@ -1,0 +1,15 @@
+.title-text{
+    color: var(--text-inactive)!important;
+    font-size: 24px !important;
+    letter-spacing: .03em;
+}
+.status{
+    color: var(--text-inactive) !important;
+}
+.view-p{
+    color: var(--text-inactive) !important;
+    font-size: 16px;
+}
+.view-cont{
+    background-color: var(--background);
+}

@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import { update} from "../store/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
+import "./createModal.css";
 
 const CreateModal = ({ show, setShow }) => {
   const [formOutput, setFormOutput] = useState({});
@@ -54,10 +55,12 @@ const CreateModal = ({ show, setShow }) => {
       <Modal
         show={show}
         onHide={() => setShow(false)}
-        dialogClassName="modal-90w"
+        dialogClassName="modal-90w "
         aria-labelledby="example-custom-modal-styling-title"
+        
+       
       >
-        <Modal.Header className="border-0 mb-0" closeButton></Modal.Header>
+        <Modal.Header className="border-0 mb-0 " closeButton></Modal.Header>
         <Container fluid className="text-start ">
           <Col className="m-auto px-2 py-4">
             <Form onSubmit={handleSubmit} className="m-auto">

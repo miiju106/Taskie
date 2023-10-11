@@ -11,11 +11,14 @@ import CreateTask from "./components/createTask/createTask";
 import Completed from "./components/completed/completed";
 import Pending from "./components/completed/pending";
 import ViewPage from "./components/viewPage/viewPage";
+import { useSelector} from "react-redux";
 
 function App() {
+
+  const theme = useSelector((state) => state.themeChange.theme);
   return (
-    <div className="App">
-      <main className="d-flex overflow-hidden">
+    <div className="App " data-theme={theme}>
+      <main className="d-flex main-cont overflow-hidden">
         <Router>
           <SideNav />
 

@@ -42,16 +42,16 @@ useEffect(()=>{
                    
                   </div>
                   <div className="mt-2">
-                    <p className="body-p view-p ">{list.task}</p>
+                    <p className="body-p view-p mb-5">{list.task}</p>
                   </div>
                   <div>
-                    <p className="date-p">
+                    <p className="date-p view-time">
                       Date Created:{dateFormat(list.dateCreated)}
                     </p>
                   </div>
                   <div className="d-flex gap-2">
                     <div>
-                        <span className="me-2">Edit</span>
+                        <span className="me-2 edit-span">Edit</span>
                       
                     </div>
                     <div>

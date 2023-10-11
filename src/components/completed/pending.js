@@ -30,7 +30,7 @@ const Pending = () => {
             <Row md={2} className="task-row">
               {
                 (pendingList.length == 0  ? (
-                  <h5 className="h5-text">There are no Pending Tasks...</h5>
+                  <h5 className="h5-text-text">There are no Pending Tasks...</h5>
                 ) : (
                   pendingList.map((list) => (
                     <Col className="">

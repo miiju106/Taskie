@@ -13,3 +13,9 @@
 .view-cont{
     background-color: var(--background);
 }
+.view-time{
+    color: var(--text-inactive) !important;
+}
+.edit-span{
+    color: var(--text-inactive) !important;
+}

@@ -27,7 +27,7 @@ const Completed = () => {
             <Row md={2} className="task-row">
               {
                 (completedList.length == 0  ? (
-                  <h5 className="h5-text">There are no Completed Tasks...</h5>
+                  <h5 className="h5-text-text">There are no Completed Tasks...</h5>
                 ) : (
                   completedList.map((list) => (
                     <Col className="">

@@ -6,21 +6,21 @@
   --bar-color:rgb(248, 249, 250);
   --text-active: #000;
   --text-inactive: #626365;
-  --accent: #8e05c2;
-  --border:#333;
-  --form-bag: #fff;
+  --accent: #000;
+  --non-accent: #626365;
+  
 
 }
 
 /* dark-mode */
 [data-theme = "dark"]{
-  --background: #0000;
+  --background: #191919;
   --bar-color:#26223E;
   --text-active: #fff;
   --text-inactive: #FAF9F6;
-  --accent:#8e05c2;
-  --border: #808080;
-  --form-bg:#191919;
+  --accent: #26ca28;
+  --non-accent: #fff;
+ 
 }
 
 @import url("https://fonts.googleapis.com/css?family=Outfit");

@@ -20,8 +20,8 @@ const MainPage = () => {
   const [reverseTaskArray, setReverseTaskArray] = useState([]);
 
   const taskArray = useSelector((state) => state.taskList.tasks);
-  const filteredArray = useSelector((state) => state.filterInput.filter);
-  const searchString = useSelector((state) => state.searchInput.search);
+  // const filteredArray = useSelector((state) => state.filterInput.filter);
+  // const searchString = useSelector((state) => state.searchInput.search);
 
   const completedList = taskArray.filter((item) => item.completed == true);
   const pendingList = taskArray.filter((item) => item.completed == false);
@@ -86,15 +86,15 @@ const MainPage = () => {
           <Col sm={2} md={8} lg={9} className="task-main">
             <Row md={2} className="task-row">
               {taskArray.length == 0 ? (
-                <h5 className="h5-text">No Tasks has been created...</h5>
+                <h5 className="h5-text-text">No Tasks has been created...</h5>
               ) : (
                 taskArray.map((list) => (
                   <Col className="">
                     <Card className="border-0 card-task mb-2 p-3">
                       <div className="d-flex justify-content-between">
-                        <h5 className="fw-semibold  h5-text">{list.title}</h5>
+                        <h5 className="fw-semibold h5-text">{list.title}</h5>
                         <DeleteOutlineOutlinedIcon
-                        className="unchecked span-p"
+                        className="unchecked"
                           onClick={() => dispatch(deleteTask(list))}
                         />
                       </div>
@@ -108,7 +108,7 @@ const MainPage = () => {
                       </div>
                       <div className="d-flex justify-content-between ">
                         <div>
-                          <span className="me-2 span-p">Edit</span>
+                          <span className="me-2 view-span">Edit</span>
                           <span className="view-span" onClick={()=> selectedTask(list.id)}>View</span>
                         </div>
                         <div>
@@ -141,15 +141,15 @@ const MainPage = () => {
               <div className="d-flex flex-wrap gap-3 mb-4">
                 <div>
                   <span className="project-num">Total Tasks</span>
-                  <h4 className="span-p">{taskArray.length}</h4>
+                  <h4 className="span-para">{taskArray.length}</h4>
                 </div>
                 <div>
                   <span className="project-num">Completed</span>
-                  <h4>{completedList.length}</h4>
+                  <h4 className="span-para">{completedList.length}</h4>
                 </div>
                 <div>
                   <span className="project-num">Pending</span>
-                  <h4>{pendingList.length}</h4>
+                  <h4 className="span-para">{pendingList.length}</h4>
                 </div>
               </div>
               <div className="">

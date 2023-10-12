@@ -5,6 +5,25 @@
  
 }
 
+@media screen and (max-width: 768px) {
+  .div-searchResult{
+     top: 95px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .div-searchResult{
+     max-width: 50% !important;
+     min-width: 60% !important;
+  }
+ 
+}
+/* @media screen and (max-width: 375px) {
+  .div-searchResult{
+     width: 60% !important;
+  }
+ 
+} */
+
 .search-icon-one{
     right: 6px;
   top: 10px;

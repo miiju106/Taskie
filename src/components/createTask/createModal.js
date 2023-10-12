@@ -2,22 +2,20 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import { update} from "../store/taskSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./createModal.css";
 
 const CreateModal = ({ show, setShow }) => {
   const [formOutput, setFormOutput] = useState({});
-  const [todo, setTodo] = useState([])
+ 
   const dispatch = useDispatch()
-  const taskArray = useSelector((state) => state.taskList.tasks);
+  // const taskArray = useSelector((state) => state.taskList.tasks);
 
-  // console.log("onSubmit", todo)
-  console.log("taskArray", taskArray)
-
+  
+// handling each input then merging them as an object
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -32,16 +30,16 @@ const CreateModal = ({ show, setShow }) => {
 
   
 
+// adding the objects(input) into an array manage by redux
+// submitting the input gotten from the user
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (formOutput.title && formOutput.dateCreated && formOutput.task) {
       dispatch(update(formOutput))
-         setShow(!show)
-               
+         setShow(!show)               
     }
-
     return;
   };
 

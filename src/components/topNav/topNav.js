@@ -1,10 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { complete, deleteTask } from "../store/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
@@ -15,6 +11,7 @@ import "./header.css";
 import ReactSwitch from "react-switch";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { updateTheme } from "../store/themeSlice";
+import { useNavigate } from "react-router-dom";
 
 const TopNav = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -23,26 +20,20 @@ const TopNav = () => {
   const dispatch = useDispatch();
 
   const theme = useSelector((state) => state.themeChange.theme);
+  const navigate = useNavigate()
 
-  //  const changeComplete = (listed) => {
-  //   filteredList?.forEach((item) => {
-  //     if (item.id == listed.id) {
-  //       !item.completed ? (item.completed = true) : (item.completed = false);
-  //     }
-  //   });
-  //   // dispatch(complete(listed))
+  const selectedTask = (idNumber, list) => {
+    navigate(`/view/${idNumber}`, { state: { id: idNumber} });
+  };
 
-  // }
+  
 
-  console.log("filteredList", filteredList);
+ 
 
   return (
     <Navbar expand="lg" className=" div-navbar sticky-top  py-4 mb-2">
       <Container className=" position-relative">
-        {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />  */}
-        {/* <Navbar.Brand href="#home" className="text-danger  fs-4 brand-name">
-      Task-It
-    </Navbar.Brand>  */}
+        
         <Nav className="flex-row d-md-none w-100 mb-3 justify-content-end gap-4 align-item-center">
           <div className="d-flex align-item-center gap-2">
             <span className="span-para">
@@ -59,7 +50,7 @@ const TopNav = () => {
                 onChange={() => dispatch(updateTheme())}
                 checked={theme == "dark"}
               />
-              {/* <ToggleButton style={{ fontSize: "14px" }}/> */}
+             
             </label>
           </div>
 
@@ -82,16 +73,16 @@ const TopNav = () => {
         </Nav>
 
         <Col lg={10} md={9} className="position-absolute div-searchResult">
-          <Row lg={3} md={3} className="mb-4">
+          <Row lg={3} md={3}   className="mb-4">
             {taskArray.length != 0 &&
               searchValue &&
               filteredList.slice(0, 5).map((list) => (
                 <Card className="border-0 card-task mb-2 p-3 me-3">
                   <div className="d-flex justify-content-between">
                     <h5 className="fw-semibold  h5-text">{list.title}</h5>
-                    <DeleteOutlineOutlinedIcon
+                    {/* <DeleteOutlineOutlinedIcon
                       onClick={() => dispatch(deleteTask(list))}
-                    />
+                    /> */}
                   </div>
                   <div className="mt-2 text-start">
                     <p className="body-p">{list.task}...</p>
@@ -104,11 +95,11 @@ const TopNav = () => {
                   <div className="d-flex justify-content-between ">
                     <div>
                       <span className="me-2 span-p">Edit</span>
-                      <span className="span-p">View</span>
+                      <span className="view-span" onClick={()=> selectedTask(list.id)}>View</span>
                     </div>
                     <div>
                       <div>
-                        {list.completed ? (
+                        {/* {list.completed ? (
                           <CheckBoxIcon
                             className="checked"
                             onClick={() => dispatch(complete(list))}
@@ -117,7 +108,7 @@ const TopNav = () => {
                           <CheckBoxOutlineBlankIcon
                             onClick={() => dispatch(complete(list))}
                           />
-                        )}
+                        )} */}
                         <span>{list.completed ? "Completed" : "Pending"}</span>
                       </div>
                     </div>
@@ -157,7 +148,7 @@ const TopNav = () => {
                 onChange={() => dispatch(updateTheme())}
                 checked={theme == "dark"}
               />
-              {/* <ToggleButton style={{ fontSize: "14px" }}/> */}
+             
             </label>
           </div>
 

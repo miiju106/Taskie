@@ -6,17 +6,14 @@ import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlin
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-
 const SideNav = () => {
+  const location = useLocation();
 
-  const location = useLocation()
-
+  // this is used to handle color of a nav item when navigating from one page to another
+  const whenActive = location.pathname;
   
+  console.log(whenActive);
 
-  const whenActive = location.pathname
-  console.log(whenActive)
-
-  // const btnActive = whenActive ? "icon-div-active" : "icon-div"
   return (
     <section className="side-div p-2">
       <div className="d-md-grid gap-5">
@@ -30,14 +27,22 @@ const SideNav = () => {
           </Link>
 
           <Link className="link-text" to="/complete">
-            <div className={whenActive == "/complete" ? "icon-div-active" : "icon-div"}>
+            <div
+              className={
+                whenActive == "/complete" ? "icon-div-active" : "icon-div"
+              }
+            >
               <TaskOutlinedIcon />
               <p>Completed</p>
             </div>
           </Link>
 
           <Link className="link-text" to="/pending">
-            <div className={whenActive == "/pending" ? "icon-div-active" : "icon-div"}>
+            <div
+              className={
+                whenActive == "/pending" ? "icon-div-active" : "icon-div"
+              }
+            >
               <PendingActionsOutlinedIcon />
               <p>Pending</p>
             </div>

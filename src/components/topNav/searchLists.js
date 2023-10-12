@@ -1,14 +1,9 @@
 import React from "react";
 import "./header.css";
-import { Container, Row, Col } from "react-bootstrap";
+// import { Container, Row, Col } from "react-bootstrap";
 import SearchIcon from "@mui/icons-material/Search";
-import { complete, deleteTask, update } from "../store/taskSlice";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Form from "react-bootstrap/Form";
 import { useSelector, useDispatch} from "react-redux";
-import Card from "react-bootstrap/Card";
 import { updateFilter } from '../store/filterSlice';
 import { searchRedux } from "../store/searchSlice";
 

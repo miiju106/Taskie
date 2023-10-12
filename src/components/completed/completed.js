@@ -1,19 +1,20 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../mainPage/mainPage.css";
-
 import TopNav from "../topNav/topNav";
 import Card from "react-bootstrap/Card";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Form from "react-bootstrap/Form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Completed = () => {
+
+  // taskArray is the input gotten from the user
   const taskArray = useSelector((state) => state.taskList.tasks);
   const completedList = taskArray.filter((item) => item.completed == true);
 
   const navigate = useNavigate()
 
+
+  // navigating to the view page using the id property of the taskArray(input gotten from the user)
   const selectedTask = (idNumber, list) => {
     navigate(`/view/${idNumber}`, { state: { id: idNumber} });
   };
@@ -23,7 +24,7 @@ const Completed = () => {
       <Container className="text-start ">
         <Row className="">
         
-          <Col sm={2} md={8} lg={9} className="task-main">
+          <Col md={8} lg={9} className="task-main">
             <Row md={2} className="task-row">
               {
                 (completedList.length == 0  ? (

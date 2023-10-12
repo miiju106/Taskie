@@ -7,11 +7,13 @@ export const taskSlice = createSlice({
       },
   reducers: {
     update: (state, action) => {
+      // this is used to put the input(object) gotten from the user into an array
       // state.tasks = [...state.tasks, action.payload]
       return { ...state, tasks: [...state.tasks, action.payload] };
     },
     
     complete: (state, action) => {
+      // this changes the completed property to true and back to false
       state.tasks.forEach((item) => {
         if (item.id == action.payload.id) {
           !item.completed ? (item.completed = true) : (item.completed = false);
@@ -19,6 +21,7 @@ export const taskSlice = createSlice({
       });
     },
     deleteTask: (state, action) => {
+      // this deletes the task being clicked
       const completeList = state.tasks.filter((item) => item.id != action.payload.id);
       return {
         ...state,

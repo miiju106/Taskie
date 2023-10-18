@@ -1,6 +1,5 @@
 import React from "react";
 import "./header.css";
-// import { Container, Row, Col } from "react-bootstrap";
 import SearchIcon from "@mui/icons-material/Search";
 import Form from "react-bootstrap/Form";
 import { useSelector, useDispatch} from "react-redux";

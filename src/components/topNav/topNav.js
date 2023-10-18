@@ -20,20 +20,15 @@ const TopNav = () => {
   const dispatch = useDispatch();
 
   const theme = useSelector((state) => state.themeChange.theme);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const selectedTask = (idNumber, list) => {
-    navigate(`/view/${idNumber}`, { state: { id: idNumber} });
+    navigate(`/view/${idNumber}`, { state: { id: idNumber } });
   };
-
-  
-
- 
 
   return (
     <Navbar expand="lg" className=" div-navbar sticky-top  py-4 mb-2">
-      <Container className=" position-relative">
-        
+      <Container className=" position-relative" fluid>
         <Nav className="flex-row d-md-none w-100 mb-3 justify-content-end gap-4 align-item-center">
           <div className="d-flex align-item-center gap-2">
             <span className="span-para">
@@ -50,7 +45,6 @@ const TopNav = () => {
                 onChange={() => dispatch(updateTheme())}
                 checked={theme == "dark"}
               />
-             
             </label>
           </div>
 
@@ -72,8 +66,10 @@ const TopNav = () => {
           </InputGroup>
         </Nav>
 
+        {/* list of search items */}
+
         <Col lg={10} md={9} className="position-absolute div-searchResult">
-          <Row lg={3} md={3}   className="mb-4">
+          <Row lg={3} md={3} className="mb-4">
             {taskArray.length != 0 &&
               searchValue &&
               filteredList.slice(0, 5).map((list) => (
@@ -95,7 +91,12 @@ const TopNav = () => {
                   <div className="d-flex justify-content-between ">
                     <div>
                       <span className="me-2 span-p">Edit</span>
-                      <span className="view-span" onClick={()=> selectedTask(list.id)}>View</span>
+                      <span
+                        className="view-span"
+                        onClick={() => selectedTask(list.id)}
+                      >
+                        View
+                      </span>
                     </div>
                     <div>
                       <div>
@@ -136,7 +137,10 @@ const TopNav = () => {
 
         <Nav className="flex-row d-none d-md-flex gap-4">
           <div className="d-flex gap-2 align-items-center">
-            <span className="span-para"> {theme == "light" ? "Light mode" : "Dark mode"}</span>
+            <span className="span-para">
+              {" "}
+              {theme == "light" ? "Light mode" : "Dark mode"}
+            </span>
             <label>
               <ReactSwitch
                 height={20}
@@ -148,7 +152,6 @@ const TopNav = () => {
                 onChange={() => dispatch(updateTheme())}
                 checked={theme == "dark"}
               />
-             
             </label>
           </div>
 

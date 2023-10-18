@@ -32,7 +32,7 @@ const ViewPage = () => {
   return (
     <section className="main-div m-auto">
       <TopNav />
-      <Container>
+      <Container fluid>
         <Row>
           <Col lg={10} md={9} className="p-0">
             {viewData.map((list) => (

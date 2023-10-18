@@ -12,7 +12,7 @@ import { complete, deleteTask } from "../store/taskSlice";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { useNavigate } from "react-router-dom";
-// import FilteredLists from "../topNav/filteredLists";
+
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -67,8 +67,8 @@ const MainPage = () => {
 
   return (
     <section className="main-div m-auto">
-      <TopNav />
-      <Container className="text-start ">
+      <TopNav  />
+      <Container className="text-start" fluid>
         <Button
           variant="primary"
           className="mb-3 rounded-pill py-2 px-3 fw-bold"

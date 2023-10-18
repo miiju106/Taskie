@@ -18,10 +18,20 @@ const Completed = () => {
   const selectedTask = (idNumber, list) => {
     navigate(`/view/${idNumber}`, { state: { id: idNumber} });
   };
+
+  // date Created Format
+  const dateFormat = (date) => {
+    const dateOutput = date.split("T");
+    const year = dateOutput[0];
+    const time = dateOutput[1];
+
+    return `${year}, ${time}`;
+  };
+
   return (
     <section className="main-div m-auto">
       <TopNav />
-      <Container className="text-start ">
+      <Container className="text-start " fluid>
         <Row className="">
         
           <Col md={8} lg={9} className="task-main">
@@ -41,7 +51,7 @@ const Completed = () => {
                           <p className="body-p">{(list.task).slice(0, 100)}...</p>
                         </div>
                         <div>
-                          <p className="date-p">{list.dateCreated}</p>
+                          <p className="date-p">{dateFormat(list.dateCreated)}</p>
                         </div>
                         <div className="d-flex justify-content-between ">
                           <div>

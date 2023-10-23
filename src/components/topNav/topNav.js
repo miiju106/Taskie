@@ -26,6 +26,14 @@ const TopNav = () => {
     navigate(`/view/${idNumber}`, { state: { id: idNumber } });
   };
 
+  const dateFormat = (date) => {
+    const dateOutput = date.split("T");
+    const year = dateOutput[0];
+    const time = dateOutput[1];
+
+    return `${year}, ${time}`;
+  };
+
   return (
     <Navbar expand="lg" className=" div-navbar sticky-top  py-4 mb-2">
       <Container className=" position-relative" fluid>
@@ -85,12 +93,12 @@ const TopNav = () => {
                   </div>
                   <div>
                     <p className="date-p text-start">
-                      Date Created:{list.dateCreated}
+                    Date Created:{dateFormat(list.dateCreated)}
                     </p>
                   </div>
                   <div className="d-flex justify-content-between ">
                     <div>
-                      <span className="me-2 span-p">Edit</span>
+                      {/* <span className="me-2 span-p">Edit</span> */}
                       <span
                         className="view-span"
                         onClick={() => selectedTask(list.id)}

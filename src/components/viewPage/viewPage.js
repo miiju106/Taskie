@@ -49,9 +49,9 @@ const ViewPage = () => {
                   </p>
                 </div>
                 <div className="d-flex gap-2">
-                  <div>
+                  {/* <div>
                     <span className="me-2 edit-span">Edit</span>
-                  </div>
+                  </div> */}
                   <div>
                     <div>
                       <span className="status">

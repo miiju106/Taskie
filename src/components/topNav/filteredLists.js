@@ -5,8 +5,6 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { complete, deleteTask} from "../store/taskSlice";
-
-
 import Card from "react-bootstrap/Card";
 
 const FilteredLists = () => {
@@ -14,9 +12,8 @@ const FilteredLists = () => {
         const searchString = useSelector((state) => state.searchInput.search);
     const dispatch = useDispatch()
 
-    console.log( "filteredArray", filteredArray)
-    console.log("SearchString", searchString)
-
+    
+    
   return (
     <>
     <Row>

@@ -41,8 +41,8 @@ const MainPage = () => {
     const momentTime = Math.abs(inputTime - currentTime);
     const convertToMin = Math.floor(momentTime / (60 * 1000));
     const convertToHr = Math.floor(momentTime / (60 * 60 * 1000));
-    const convertToDay = Math.floor(momentTime / (60 * 60 * 1000 * 24));
-    const convertToSec = Math.floor(momentTime / 1000);
+    // const convertToDay = Math.floor(momentTime / (60 * 60 * 1000 * 24));
+    // const convertToSec = Math.floor(momentTime / 1000);
 
     if (convertToMin <= 60) {
       return `${convertToMin} min(s) ago`;
@@ -81,7 +81,7 @@ const MainPage = () => {
           <Col md={8} lg={9} className="task-main">
             <Row md={2} className="task-row ">
               {taskArray.length == 0 ? (
-                <h5 className="h5-text-text">No Tasks has been created...</h5>
+                <h5 className="h5-text-text">No Task has been created...</h5>
               ) : (
                 taskArray.map((list) => (
                   <Col className="">
@@ -103,7 +103,7 @@ const MainPage = () => {
                       </div>
                       <div className="d-flex justify-content-between ">
                         <div>
-                          <span className="me-2 view-span">Edit</span>
+                          {/* <span className="me-2 view-span">Edit</span> */}
                           <span
                             className="view-span"
                             onClick={() => selectedTask(list.id)}

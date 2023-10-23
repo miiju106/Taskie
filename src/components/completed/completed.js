@@ -55,7 +55,7 @@ const Completed = () => {
                         </div>
                         <div className="d-flex justify-content-between ">
                           <div>
-                            <span className="me-2">Edit</span>
+                            {/* <span className="me-2">Edit</span> */}
                             <span className="view-span" onClick={()=> selectedTask(list.id)}>View</span>
                           </div>
                           <div>

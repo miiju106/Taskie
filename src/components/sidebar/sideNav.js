@@ -17,7 +17,10 @@ const SideNav = () => {
   return (
     <section className="side-div p-2">
       <div className="d-md-grid gap-5">
+        <Link className="text-decoration-none" to="/">
         <p className="fw-bold fs-5 d-none d-sm-block logo">Taskie</p>
+        </Link>
+        
         <div className="nav d-md-block justify-content-around">
           <Link className="link-text" to="/">
             <div className={whenActive == "/" ? "icon-div-active" : "icon-div"}>

@@ -30,8 +30,7 @@ const SearchLists = ({searchValue, setSearchValue, filteredList, setFilteredList
         }
     }
     
-    console.log("searchValue", searchValue)
-    console.log("filteredList", filteredList)
+ 
 
   return (
     <>

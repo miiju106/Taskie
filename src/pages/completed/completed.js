@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../mainPage/mainPage.css";
-import TopNav from "../topNav/topNav";
+import TopNav from "../../components/topNav/topNav";
 import Card from "react-bootstrap/Card";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

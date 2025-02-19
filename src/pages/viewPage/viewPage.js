@@ -1,51 +1,59 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Card from "react-bootstrap/Card";
-import TopNav from "../topNav/topNav";
+import TopNav from "../../components/topNav/topNav";
 import "./viewPage.css";
+import axios from "../../utils/api";
 
 const ViewPage = () => {
-  const taskArray = useSelector((state) => state.taskList.tasks);
-  const [viewData, setViewData] = useState([]);
+  const [viewData, setViewData] = useState({});
 
   const location = useLocation();
   const chosenId = location.state.id;
 
   // View tasks
   useEffect(() => {
-    const chosenId = location.state.id;
-    const getData = taskArray.filter((list) => list.id == chosenId);
-    setViewData(getData);
-  }, [chosenId, viewData]);
+    const fetchTask = async () => {
+      try {
+        const resp = await axios.get(`/user/get-task/${chosenId}`);
+        const task = resp.data.task;
+
+        setViewData(task);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTask();
+  }, [chosenId]);
 
   // date Created Format
   const dateFormat = (date) => {
-    const dateOutput = date.split("T");
+    const dateOutput = date?.split("T");
     const year = dateOutput[0];
     const time = dateOutput[1];
 
     return `${year}, ${time}`;
   };
-
+console.log(viewData.createdAt)
   return (
     <section className="main-div m-auto">
       <TopNav />
       <Container fluid>
         <Row>
           <Col lg={10} md={9} className="p-0">
-            {viewData.map((list) => (
+            {viewData && (
               <Card className="border-0 rounded-0 view-cont text-start mb-2 p-3">
                 <div className="d-flex justify-content-between">
-                  <h5 className="fw-semibold title-text">{list.title}</h5>
+                  <h5 className="fw-semibold title-text">{viewData.title}</h5>
                 </div>
                 <div className="mt-2">
-                  <p className="body-p view-p mb-5">{list.task}</p>
+                  <p className="body-p view-p mb-5">{viewData.body}</p>
                 </div>
                 <div>
                   <p className="date-p view-time">
-                    Date Created:{dateFormat(list.dateCreated)}
+                    {/* Date Created:{dateFormat(viewData.createdAt)} */}
                   </p>
                 </div>
                 <div className="d-flex gap-2">
@@ -56,13 +64,14 @@ const ViewPage = () => {
                     <div>
                       <span className="status">
                         {" "}
-                        Status:{""} {list.completed ? "Completed" : "Pending"}
+                        Status:{""}{" "}
+                        {viewData.completed ? "Completed" : "Pending"}
                       </span>
                     </div>
                   </div>
                 </div>
               </Card>
-            ))}
+            )}
           </Col>
         </Row>
       </Container>

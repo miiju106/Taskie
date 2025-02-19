@@ -12,18 +12,18 @@ const SideNav = () => {
   // this is used to handle color of a nav item when navigating from one page to another
   const whenActive = location.pathname;
   
-  console.log(whenActive);
+ 
 
   return (
-    <section className="side-div p-2">
+    <section className={` p-2 ${whenActive == "/" ? "d-none" : "side-div"}`} >
       <div className="d-md-grid gap-5">
         <Link className="text-decoration-none" to="/">
         <p className="fw-bold fs-5 d-none d-sm-block logo">Taskie</p>
         </Link>
         
         <div className="nav d-md-block justify-content-around">
-          <Link className="link-text" to="/">
-            <div className={whenActive == "/" ? "icon-div-active" : "icon-div"}>
+          <Link className="link-text" to="/tasks">
+            <div className={whenActive == "/tasks" ? "icon-div-active" : "icon-div"}>
               <HomeOutlinedIcon />
               <p>Home</p>
             </div>

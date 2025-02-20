@@ -27,16 +27,15 @@ const ViewPage = () => {
     };
     fetchTask();
   }, [chosenId]);
+  
 
-  // date Created Format
+  // date Created Format  
   const dateFormat = (date) => {
-    const dateOutput = date?.split("T");
-    const year = dateOutput[0];
-    const time = dateOutput[1];
+    const dateOutput = new Date(date) 
 
-    return `${year}, ${time}`;
+    return dateOutput.toLocaleString("en-GB", {timeZone:"Africa/Lagos"});
   };
-console.log(viewData.createdAt)
+
   return (
     <section className="main-div m-auto">
       <TopNav />
@@ -51,9 +50,12 @@ console.log(viewData.createdAt)
                 <div className="mt-2">
                   <p className="body-p view-p mb-5">{viewData.body}</p>
                 </div>
-                <div>
+                <div className="d-flex flex-md-row flex-column gap-2">
                   <p className="date-p view-time">
-                    {/* Date Created:{dateFormat(viewData.createdAt)} */}
+                    Created:{dateFormat(viewData.createdAt)}
+                  </p>
+                  <p className="date-p view-time">
+                    Updated:{dateFormat(viewData.updatedAt)}
                   </p>
                 </div>
                 <div className="d-flex gap-2">

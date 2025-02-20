@@ -14,6 +14,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { useNavigate } from "react-router-dom";
 import axios from "../../utils/api";
 import DeleteModal from "../../components/deleteModal/deleteModal";
+import { toast } from "react-toastify";
 
 const MainPage = () => {
   const [show, setShow] = useState(false);
@@ -22,12 +23,20 @@ const MainPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
   const [singleTask, setSingleTask] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate();
+
+  const completedTasks = taskArray.filter((list) => list.completed);
+  const pendingTasks = taskArray.filter((list) => !list.completed);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
+       
         const resp = await axios.get("/user/get-tasks");
         const tasks = resp.data.tasks;
 
@@ -39,6 +48,25 @@ const MainPage = () => {
     fetchTasks();
   }, [taskArray]);
 
+  useEffect(() => {
+    const filtered = taskArray.filter((list) => {
+      const byTitle = list.title
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+      const byDesc = list.desc
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+
+      return byTitle || byDesc;
+    });
+
+    if (searchValue) {
+      setFilteredTasks(filtered);
+    } else {
+      setFilteredTasks(taskArray);
+    }
+  }, [searchValue, taskArray]);
+
   // Attaching a moment ago to the recent tasks...
   const momentAgo = (dateInput) => {
     const currentTime = new Date().getTime();
@@ -46,23 +74,23 @@ const MainPage = () => {
     const momentTime = Math.abs(inputTime - currentTime);
     const convertToMin = Math.floor(momentTime / (60 * 1000));
     const convertToHr = Math.floor(momentTime / (60 * 60 * 1000));
-    // const convertToDay = Math.floor(momentTime / (60 * 60 * 1000 * 24));
+    const convertToDay = Math.floor(momentTime / (60 * 60 * 1000 * 24));
     // const convertToSec = Math.floor(momentTime / 1000);
 
     if (convertToMin <= 60) {
       return `${convertToMin} min(s) ago`;
-    } else {
+    } else if (convertToMin > 60 && convertToMin < 1440) {
       return `${convertToHr} hr(s) ago`;
+    } else if (convertToMin >= 1440) {
+      return `${convertToDay} day(s) ago`;
     }
   };
 
   // date Created Format
   const dateFormat = (date) => {
-    const dateOutput = date.split("T");
-    const year = dateOutput[0];
-    const time = dateOutput[1];
+    const dateOutput = new Date(date);
 
-    return `${year}, ${time}`;
+    return dateOutput.toLocaleString("en-GB", { timeZone: "Africa/Lagos" });
   };
 
   // navigating to the view page using the id property of the taskArray(input gotten from the user)
@@ -70,20 +98,47 @@ const MainPage = () => {
     navigate(`/view/${idNumber}`, { state: { id: idNumber } });
   };
 
+  // stores the id and helps pass the id into the DeleteModal
   const handleId = (id, title) => {
     setShowDeleteModal(!showDeleteModal);
     setChosenId(id);
     setTaskTitle(title);
   };
 
+  // passes the selected Task into a state called singleTask
   const handleSingleTask = (task) => {
     setSingleTask((prev) => ({ ...prev, ...task }));
     setShow(true);
   };
-  // console.log("show",show)
+
+  // handles the completed and pending update
+  const handleCompleted = async (isTaskComplete, taskId) => {
+    const isUpdatedCompleted = !isTaskComplete
+      ? (isTaskComplete = true)
+      : (isTaskComplete = false);
+
+    if (taskId) {
+      try {
+        setLoading(true);
+        const resp = await axios.put(`/user/update-tasks/${taskId}`, {
+          completed: isUpdatedCompleted,
+        });
+        const successMsg = isUpdatedCompleted
+          ? "Task Marked Completed"
+          : "Task Marked Pending";
+        toast.success(successMsg);
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Task not Marked At All");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   return (
     <section className="main-div m-auto">
-      <TopNav />
+      <TopNav searchValue={searchValue} setSearchValue={setSearchValue} />
       <Container className="text-start" fluid>
         <Button
           variant="primary"
@@ -92,7 +147,12 @@ const MainPage = () => {
         >
           Create Task
         </Button>
-        <CreateModal show={show} setShow={setShow} singleTask={singleTask} setSingleTask={setSingleTask} />
+        <CreateModal
+          show={show}
+          setShow={setShow}
+          singleTask={singleTask}
+          setSingleTask={setSingleTask}
+        />
 
         <DeleteModal
           showDeleteModal={showDeleteModal}
@@ -102,12 +162,13 @@ const MainPage = () => {
         />
 
         <Row className="">
+         
           <Col md={8} lg={9} className="task-main">
             <Row md={2} className="task-row ">
-              {taskArray.length == 0 ? (
+              {filteredTasks?.length == 0 ? (
                 <h5 className="h5-text-text">No Task has been created...</h5>
               ) : (
-                taskArray.map((list) => (
+                filteredTasks?.map((list) => (
                   <Col className="" key={list._id}>
                     <Card className="border-0 card-task mb-2 p-3">
                       <div className="d-flex justify-content-between">
@@ -118,14 +179,18 @@ const MainPage = () => {
                         />
                       </div>
                       <div className="mt-2">
-                        <p className="body-p">{list.desc}...</p>
+                        <p className="body-p">{list.desc}</p>
                       </div>
-                      <div>
+                      <div className="d-flex flex-md-row flex-column gap-2">
                         <p className="date-p">
-                          Date Created:{dateFormat(list.createdAt)}
+                          Created:{dateFormat(list.createdAt)}
+                        </p>
+
+                        <p className="date-p">
+                          Updated:{dateFormat(list.updatedAt)}
                         </p>
                       </div>
-                      <div className="d-flex justify-content-between ">
+                      <div className="d-flex justify-content-between flex-md-row flex-column gap-2">
                         <div>
                           <span
                             className="view-span me-2"
@@ -140,6 +205,7 @@ const MainPage = () => {
                                 title: list.title,
                                 desc: list.desc,
                                 body: list.body,
+                                completed: list.completed,
                                 id: list._id,
                               })
                             }
@@ -152,16 +218,24 @@ const MainPage = () => {
                             {list.completed ? (
                               <CheckBoxIcon
                                 className="checked"
-                                // onClick={() => dispatch(complete(list))}
+                                onClick={() =>
+                                  handleCompleted(list.completed, list._id)
+                                }
                               />
                             ) : (
                               <CheckBoxOutlineBlankIcon
                                 className="unchecked"
-                                // onClick={() => dispatch(complete(list))}
+                                onClick={() =>
+                                  handleCompleted(list.completed, list._id)
+                                }
                               />
                             )}
                             <span className="span-p">
-                              {list.completed ? "Completed" : "Pending"}
+                              {loading
+                                ? "Loading"
+                                : list.completed
+                                ? "Completed"
+                                : "Pending"}
                             </span>
                           </div>
                         </div>
@@ -177,22 +251,25 @@ const MainPage = () => {
               <div className="d-flex flex-wrap gap-3 mb-4">
                 <div>
                   <span className="project-num">Total Tasks</span>
-                  <h4 className="span-para">{taskArray.length}</h4>
+                  <h4 className="span-para">{taskArray?.length}</h4>
                 </div>
                 <div>
                   <span className="project-num">Completed</span>
-                  {/* <h4 className="span-para">{completedList.length}</h4> */}
+                  <h4 className="span-para">{completedTasks?.length}</h4>
                 </div>
                 <div>
                   <span className="project-num">Pending</span>
-                  {/* <h4 className="span-para">{pendingList.length}</h4> */}
+                  <h4 className="span-para">{pendingTasks?.length}</h4>
                 </div>
               </div>
               <div className="">
                 <p className="fw-semibold recent-p">Recent Tasks</p>
                 {taskArray &&
                   taskArray.slice(0, 4).map((list) => (
-                    <Card className="border-0 card-task mb-2 p-3">
+                    <Card
+                      className="border-0 card-task mb-2 p-3"
+                      key={list._id}
+                    >
                       <div className="d-flex justify-content-between">
                         <h5 className="fw-semibold  h5-text">{list.title}</h5>
                       </div>

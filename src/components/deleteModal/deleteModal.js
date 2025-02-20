@@ -6,19 +6,21 @@ import { useState } from "react";
 import axios from "../../utils/api";
 import { toast } from "react-toastify";
 
-const DeleteModal = ({ showDeleteModal, setShowDeleteModal, chosenId, taskTitle }) => {
+const DeleteModal = ({
+  showDeleteModal,
+  setShowDeleteModal,
+  chosenId,
+  taskTitle,
+}) => {
   const [loading, setLoading] = useState(false);
 
-  
-  
-
-
+// handles delete task
   const handleDelete = async () => {
     if (chosenId) {
       try {
         setLoading(true);
         const resp = await axios.delete(`/user/delete-tasks/${chosenId}`);
-        console.log(resp)
+        console.log(resp);
         toast.success("Tasks Deleted Successfully");
         setShowDeleteModal(false);
       } catch (error) {
@@ -42,7 +44,10 @@ const DeleteModal = ({ showDeleteModal, setShowDeleteModal, chosenId, taskTitle 
         <Container fluid className="text-start ">
           <Col className="m-auto px-2 py-4">
             <Modal.Body>
-              <p>Are you sure you want to delete the task with the title - <span className="text-uppercase">{taskTitle}</span> ?</p>
+              <p>
+                Are you sure you want to delete the task with the title -{" "}
+                <span className="text-uppercase">{taskTitle}</span> ?
+              </p>
             </Modal.Body>
 
             <div className="w-100 d-flex justify-content-center gap-3 flex-md-row flex-column">
@@ -57,7 +62,7 @@ const DeleteModal = ({ showDeleteModal, setShowDeleteModal, chosenId, taskTitle 
               <Button
                 variant="secondary"
                 className="rounded-pill py-2 px-4 fw-bold w-100"
-                onClick={()=>setShowDeleteModal(false)}
+                onClick={() => setShowDeleteModal(false)}
               >
                 No
               </Button>

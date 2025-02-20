@@ -4,19 +4,16 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import { update } from "../../components/store/taskSlice";
-import { useDispatch } from "react-redux";
 import "./createModal.css";
 import axios from "../../utils/api";
 import { toast } from "react-toastify";
-import { IoClose } from "react-icons/io5";
+
 
 const CreateModal = ({ show, setShow, singleTask, setSingleTask }) => {
   const [formOutput, setFormOutput] = useState({});
   const [loading, setLoading] = useState(false);
 
- 
-
+  // updates formOutput only if an id of the selected Task as being passed to the modal
   useEffect(() => {
     if (singleTask.id) {
       setFormOutput((formOutput) => ({
@@ -25,6 +22,7 @@ const CreateModal = ({ show, setShow, singleTask, setSingleTask }) => {
       }));
     }
   }, [singleTask]);
+
 
   // handling each input then merging them as an object
   const handleChange = (e) => {
@@ -37,31 +35,38 @@ const CreateModal = ({ show, setShow, singleTask, setSingleTask }) => {
     });
   };
 
+  // handles task update
   const handleUpdate = async () => {
     const updatedItem = Object.keys(singleTask).reduce((acc, current) => {
-      if (formOutput[current] !== acc[current]) {
+      if (formOutput[current] !== singleTask[current]) {
         acc[current] = formOutput[current];
       }
       return acc;
     }, {});
 
-    try {
-      setLoading(true);
-      const resp = await axios.put(
-        `/user/update-tasks/${singleTask.id}`,
-        updatedItem
-      );
-      console.log(resp);
-      toast.success("Tasks Updated Successfully");
-      setShow(false);
-    } catch (error) {
-      console.log(error.message);
-      toast.error("Updating Failed");
-    } finally {
+    if (Object.keys(updatedItem).length !== 0) {
+      try {
+        setLoading(true);
+        const resp = await axios.put(
+          `/user/update-tasks/${singleTask.id}`,
+          updatedItem
+        );
+
+        toast.success("Tasks Updated Successfully");
+        setShow(false);
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Updating Failed");
+      } finally {
+        setLoading(false);
+      }
+    } else {
       setLoading(false);
+      toast.error("None of the Fields were updated");
     }
   };
 
+  // handles new Task 
   const handlePost = async () => {
     try {
       if (formOutput.title && formOutput.desc && formOutput.body) {
@@ -79,10 +84,11 @@ const CreateModal = ({ show, setShow, singleTask, setSingleTask }) => {
     }
   };
 
+  // handles submission based on either updating a task or creating a new task
   const handleSubmit = async (e) => {
     e.preventDefault();
     return formOutput?.id ? await handleUpdate() : await handlePost();
-};
+  };
 
   return (
     <>
@@ -118,10 +124,10 @@ const CreateModal = ({ show, setShow, singleTask, setSingleTask }) => {
                 <Form.Label className="fw-semibold">Description</Form.Label>
                 <Form.Control
                   type="type"
-                  placeholder="Description of the task"
+                  placeholder="Short Description of the task"
                   name="desc"
                   title="Description of the task"
-                  value={formOutput.desc  || ""}
+                  value={formOutput.desc || ""}
                   onChange={handleChange}
                   required
                 />

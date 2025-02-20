@@ -11,45 +11,45 @@ const SideNav = () => {
 
   // this is used to handle color of a nav item when navigating from one page to another
   const whenActive = location.pathname;
-  
-  console.log(whenActive);
+
+  const sideNavLink = [
+    {
+      link: "/tasks",
+      icon: <HomeOutlinedIcon />,
+      label: "Home",
+    },
+    {
+      link: "/complete",
+      icon: <TaskOutlinedIcon />,
+      label: "Completed",
+    },
+    {
+      link: "/pending",
+      icon: <PendingActionsOutlinedIcon />,
+      label: "Pending",
+    },
+  ];
 
   return (
-    <section className="side-div p-2">
+    <section className={` p-2 ${whenActive == "/" ? "d-none" : "side-div"}`}>
       <div className="d-md-grid gap-5">
         <Link className="text-decoration-none" to="/">
-        <p className="fw-bold fs-5 d-none d-sm-block logo">Taskie</p>
+          <p className="fw-bold fs-5 d-none d-sm-block logo">Taskie</p>
         </Link>
-        
+
         <div className="nav d-md-block justify-content-around">
-          <Link className="link-text" to="/">
-            <div className={whenActive == "/" ? "icon-div-active" : "icon-div"}>
-              <HomeOutlinedIcon />
-              <p>Home</p>
-            </div>
-          </Link>
-
-          <Link className="link-text" to="/complete">
-            <div
-              className={
-                whenActive == "/complete" ? "icon-div-active" : "icon-div"
-              }
-            >
-              <TaskOutlinedIcon />
-              <p>Completed</p>
-            </div>
-          </Link>
-
-          <Link className="link-text" to="/pending">
-            <div
-              className={
-                whenActive == "/pending" ? "icon-div-active" : "icon-div"
-              }
-            >
-              <PendingActionsOutlinedIcon />
-              <p>Pending</p>
-            </div>
-          </Link>
+          {sideNavLink.map((list, index) => (
+            <Link className="link-text" to={list.link} key={index}>
+              <div
+                className={
+                  whenActive == list.link ? "icon-div-active" : "icon-div"
+                }
+              >
+                {list.icon}
+                <p>{list.label}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

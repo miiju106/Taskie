@@ -1,38 +1,20 @@
 import React from "react";
-import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import SearchLists from "./searchLists";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./header.css";
 import ReactSwitch from "react-switch";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { updateTheme } from "../store/themeSlice";
-import { useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import Form from "react-bootstrap/Form";
 
-const TopNav = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [filteredList, setFilteredList] = useState([]);
-  const taskArray = useSelector((state) => state.taskList.tasks);
+const TopNav = ({ searchValue, setSearchValue }) => {
   const dispatch = useDispatch();
 
   const theme = useSelector((state) => state.themeChange.theme);
-  const navigate = useNavigate();
-
-  const selectedTask = (idNumber, list) => {
-    navigate(`/view/${idNumber}`, { state: { id: idNumber } });
-  };
-
-  const dateFormat = (date) => {
-    const dateOutput = date.split("T");
-    const year = dateOutput[0];
-    const time = dateOutput[1];
-
-    return `${year}, ${time}`;
-  };
 
   return (
     <Navbar expand="lg" className=" div-navbar sticky-top  py-4 mb-2">
@@ -65,67 +47,18 @@ const TopNav = () => {
         </Nav>
         <Nav className="search-nav">
           <InputGroup className=" search-cont position-relative m-auto rounded-pill w-100 d-lg-none d-flex">
-            <SearchLists
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              filteredList={filteredList}
-              setFilteredList={setFilteredList}
-            />
+            <>
+              <Form.Control
+                placeholder="Search..."
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                className="search-text2 rounded py-2"
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <SearchIcon className="position-absolute text-dark search-icon-one" />
+            </>
           </InputGroup>
         </Nav>
-
-        {/* list of search items */}
-
-        <Col lg={10} md={9} className="position-absolute div-searchResult">
-          <Row lg={3} md={3} className="mb-4">
-            {taskArray.length != 0 &&
-              searchValue &&
-              filteredList.slice(0, 5).map((list) => (
-                <Card className="border-0 card-task mb-2 p-3 me-3">
-                  <div className="d-flex justify-content-between">
-                    <h5 className="fw-semibold  h5-text">{list.title}</h5>
-                    {/* <DeleteOutlineOutlinedIcon
-                      onClick={() => dispatch(deleteTask(list))}
-                    /> */}
-                  </div>
-                  <div className="mt-2 text-start">
-                    <p className="body-p">{list.task}...</p>
-                  </div>
-                  <div>
-                    <p className="date-p text-start">
-                    Date Created:{dateFormat(list.dateCreated)}
-                    </p>
-                  </div>
-                  <div className="d-flex justify-content-between ">
-                    <div>
-                      {/* <span className="me-2 span-p">Edit</span> */}
-                      <span
-                        className="view-span"
-                        onClick={() => selectedTask(list.id)}
-                      >
-                        View
-                      </span>
-                    </div>
-                    <div>
-                      <div>
-                        {/* {list.completed ? (
-                          <CheckBoxIcon
-                            className="checked"
-                            onClick={() => dispatch(complete(list))}
-                          />
-                        ) : (
-                          <CheckBoxOutlineBlankIcon
-                            onClick={() => dispatch(complete(list))}
-                          />
-                        )} */}
-                        <span>{list.completed ? "Completed" : "Pending"}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-          </Row>
-        </Col>
 
         <Navbar.Collapse
           id="basic-navbar-nav"
@@ -133,12 +66,16 @@ const TopNav = () => {
         >
           <Nav className="w-25">
             <InputGroup className=" search-cont position-relative m-auto overflow-hidden">
-              <SearchLists
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-                filteredList={filteredList}
-                setFilteredList={setFilteredList}
-              />
+              <>
+                <Form.Control
+                  placeholder="Search..."
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  className="search-text2 rounded py-2"
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <SearchIcon className="position-absolute text-dark search-icon-one" />
+              </>
             </InputGroup>
           </Nav>
         </Navbar.Collapse>

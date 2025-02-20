@@ -1,6 +1,6 @@
 import React from "react";
 // import "react-calendar/dist/css/Calendar.css";
-import TopNav from "../topNav/topNav";
+import TopNav from "../../components/topNav/topNav";
 import { Container, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
